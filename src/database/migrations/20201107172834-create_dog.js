@@ -2,27 +2,27 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('groups',{
+    return await queryInterface.createTable('dogs',{
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.DataTypes.UUID,
-        defaultValue: Sequelize.UUID, // I expected this set the column default
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUID,
       },
       name:{
         type:Sequelize.STRING,
         allowNull:false
       },
-      location:{
+      breed:{
         type:Sequelize.STRING,
         allowNull:false
       },
-      breeds:{
-        type:Sequelize.STRING,
+      age:{
+        type: Sequelize.INTEGER,
         allowNull:false,
       },
-      phone:{
-        type: Sequelize.STRING,
+      location:{
+        type:Sequelize.STRING,
         allowNull:false,
       },
       created_at: {
@@ -34,9 +34,21 @@ module.exports = {
         allowNull: false,
       },
     })
+    /**
+     * Add altering commands here.
+     *
+     * Example:
+     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+     */
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('groups')
+    return await queryInterface.dropTable('dogs')
+    /**
+     * Add reverting commands here.
+     *
+     * Example:
+     * await queryInterface.dropTable('users');
+     */
   }
 };

@@ -30,7 +30,7 @@ module.exports = {
             })
             return res.json(user)
         }catch(error){
-            return res.status(400).json({ error: "Oi" });
+            return res.status(400).json({ error: error });
         }
         
     },

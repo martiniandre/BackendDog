@@ -18,7 +18,7 @@ module.exports = {
     async store(req,res){
         try{
             const {name,location,breeds,phone} = req.body;
-            const locationExist = await Group.findOne({where: { location}})
+            const locationExist = await Group.findOne({where: { location }})
             if(locationExist){
                 throw Error("Location already registered")
             }
@@ -47,6 +47,6 @@ module.exports = {
             return res.json({error:"ID not found"})
         }
         await Group.update(data, {where: { id } } )
-        return res.status(200).json({success:"Group updated"});
-},   
+        return res.status(200).json({success:"User updated"});
+},  
 }

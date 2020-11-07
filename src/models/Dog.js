@@ -1,6 +1,6 @@
 const { Model, DataTypes} = require('sequelize');
 
-class Group extends Model{
+class Dog extends Model{
     static init(sequelize){
         super.init({
             id:{
@@ -9,12 +9,12 @@ class Group extends Model{
                 primaryKey: true
             },
             name: DataTypes.STRING,
+            breed:DataTypes.STRING,
+            age:DataTypes.INTEGER,
             location: DataTypes.STRING,
-            breeds:DataTypes.ARRAY(DataTypes.STRING),
-            phone:DataTypes.STRING
         },{
             sequelize
         })
     }
 }
-module.exports = Group
+module.exports = Dog
