@@ -1,5 +1,8 @@
 const User = require('../models/User')
+const authConfig = require('../config/auth.json')
 
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 module.exports = {
     async index(req,res){
         try{
@@ -20,15 +23,20 @@ module.exports = {
             const emailExist = await User.findOne({where : { email }})
             console.log(emailExist)
             if(emailExist){
-                throw Error("Email already exist")
+                return res.json({error: "Email already registered"})
             }
+            const hashedPassword = await bcrypt.hash(password,3);
+            console.log(hashedPassword)
             const user = await User.create({
                 name,
                 email,
-                password,
+                hash_pass: hashedPassword,
                 location
             })
-            return res.json(user)
+            const token = jwt.sign({ id: user.id}, authConfig.secret,{
+                expiresIn:21600, 
+            })
+            return res.json({user,token})
         }catch(error){
             return res.status(400).json({ error: error });
         }
@@ -49,7 +57,8 @@ module.exports = {
             }
             await User.update(data, {where: { id } } )
             return res.status(200).json({success:"User updated"});
-    },   
+    },
+
    /*  async delete(req,res){
         const { id } = req.params;
         const userFind = await User.findByPk(id)
