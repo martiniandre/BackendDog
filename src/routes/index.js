@@ -8,11 +8,11 @@ const AuthRoute = require('./auth.routes')
 const authMiddle = require('../services/auth')
 
 
+routes.use('/user',UserRoutes)
+routes.use('/dogs',DogRoute)
 routes.use('/auth',AuthRoute)
 routes.use(authMiddle);
-routes.use('/user',UserRoutes)
 routes.use('/group',groupRoute)
-routes.use('/dogs',DogRoute)
 
 
 

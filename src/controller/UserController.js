@@ -6,13 +6,9 @@ const jwt = require('jsonwebtoken')
 module.exports = {
     async index(req,res){
         try{
-            const {name} = req.query;
-            const results = name  ? await User.findAll({
-            where:{
-                name
-            }
-        }) : await User.findAll()
-                return res.json(results);
+            const user =  await User.findOne({ where:{ id: req.userId}
+            })
+            return res.status(200).json(user)
         }catch(error){
             return res.status(400).json({ error: error.message });
         }
@@ -21,12 +17,10 @@ module.exports = {
         try{
             const { name,email,password,location} = req.body;
             const emailExist = await User.findOne({where : { email }})
-            console.log(emailExist)
             if(emailExist){
                 return res.json({error: "Email already registered"})
             }
             const hashedPassword = await bcrypt.hash(password,3);
-            console.log(hashedPassword)
             const user = await User.create({
                 name,
                 email,

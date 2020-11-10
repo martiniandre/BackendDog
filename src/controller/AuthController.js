@@ -10,20 +10,18 @@ module.exports = {
     async auth(req,res){
         try{
             const {email,password} = req.body;
-            const user = await User.findOne({email});
-
-            if(user.email != email || !await bcrypt.compare(password ,user.hash_pass)){
-                return res.status(400).send("Email or password incorrect")
+            const user = await User.findOne({where: {email: email}});   
+            if(!user || !await bcrypt.compare(password ,user.hash_pass)){
+                return res.status(401).json({error:"Email or password invalid"})
             }
             user.hash_pass = undefined
 
             const token = jwt.sign({ id: user.id}, authConfig.secret,{
                 expiresIn:21600, 
             })
-
-            return res.status(400).json({user,token})
+            return res.json({user,token})
         }catch(error){
-              return res.json({error: error})      
+            return res.status(401).json({error: "Credenciais inválido"})
         }
     }
 
