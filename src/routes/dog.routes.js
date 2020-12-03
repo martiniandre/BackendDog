@@ -4,7 +4,7 @@ const DogController = require('../controller/DogController')
 
 const DogRoute = express.Router()
 
-DogRoute.get('/',DogController.index)
+DogRoute.get('/:limit',DogController.index)
 DogRoute.post('/',DogController.store)
 DogRoute.put('/:id',DogController.update)
 DogRoute.delete('/:id',DogController.delete)

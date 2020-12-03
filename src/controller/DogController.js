@@ -1,15 +1,22 @@
+const {Op} = require('sequelize');
 const Dog = require('../models/Dog')
 
 module.exports = {
     async index(req,res){
         try{
-            const { name } = req.query;
-            const results = name  ? await Dog.findAll({
-            where:{
-                name
-            }
-        }) : await Dog.findAll()
-                return res.json(results);
+            const {name,breed} = req.body;
+            const { limit } = req.params;
+            const results = name && breed ? await Dog.findAll({
+                where:{
+                    name: { [Op.like]: `%${name}%`},
+                    breed:{ [Op.like]: `%${breed}%`}
+                },
+                limit
+            }) : await Dog.findAll({
+                limit
+            })
+            console.log(results)
+            return res.status(200).json(results)
         }catch(error){
             return res.status(400).json({ error: error.message });
         }

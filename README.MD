@@ -4,4 +4,3 @@ Funções por enquanto:
 - criar, editar, listar usuários
 - criar, editar,listar grupos de adoção
 - criar, listar, editar e deletar cachorro
-- autenticação

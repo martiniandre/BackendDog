@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 module.exports = {
     async index(req,res){
         try{
-            const user =  await User.findOne({ where:{ id: req.userId}
+            const user =  await User.findOne({ where:{ id: req.userId }
             })
             return res.status(200).json(user)
         }catch(error){
